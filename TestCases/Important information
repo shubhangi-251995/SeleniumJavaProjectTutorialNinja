@@ -1,0 +1,3 @@
+----In selenium automation to interact with the email system, if we want to make the program to use the third party which can be a software or a any language program
+to access your email, we need to use IMAP/POP3/SMTP/Exchange Web Services (EWS)/Microsoft Graph API protocols.
+to Access, IMAP and 2 factor authentication should be enabled for the email account.

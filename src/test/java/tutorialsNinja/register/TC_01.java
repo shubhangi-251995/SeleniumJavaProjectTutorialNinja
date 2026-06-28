@@ -13,6 +13,7 @@ import java.util.Date;
 
 @Test
 public class TC_01 {
+    //Verify the registering an account by using only manditory fields
     public void verifyRegistrationWithManditoryFields() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
