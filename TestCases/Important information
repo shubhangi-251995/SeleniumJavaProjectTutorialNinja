@@ -1,3 +1,89 @@
 ----In selenium automation to interact with the email system, if we want to make the program to use the third party which can be a software or a any language program
 to access your email, we need to use IMAP/POP3/SMTP/Exchange Web Services (EWS)/Microsoft Graph API protocols.
 to Access, IMAP and 2 factor authentication should be enabled for the email account.
+-----------------------------------------------------------------------------------------------------------------------------------
+when to use this xpath can u give me short description for it?
+ parent::
+ following-sibling::
+ preceding-sibling::
+ ancestor::
+ child::
+Sure! Here's a short description of when to use each of the XPath axes you mentioned:
+1. **parent::** -
+-Go one level up to the immediate parent
+-When child element is easy to find but parent is needed.
+- example: //input[@id='input-firstname']/parent::div (Get the div containing the input field.)
+
+2.  following-sibling::----->
+-Go to the next sibling element
+-To locate error messages, buttons, labels beside an element.
+- example- //input[@id='input-firstname']/following-sibling::div (Get the validation message next to the First Name field.)
+
+3. **preceding-sibling::** -
+-Go to the previous sibling element
+-To locate a field from its label or error message
+- example- //div[@class='text-danger']/preceding-sibling::input ( 📌 Get the input field associated with an error message.)
+
+4. **ancestor::** -
+-Go up multiple levels in the hierarchy
+-When you need a container/form/div surrounding an element.
+- example: //input[@id='input-firstname']/ancestor::form(📌 Find the form that contains the input field.)
+
+5. **child::** -
+-Go down one level to direct children
+When you want only immediate child elements.
+- example: //form/child::div (📌 Get only the direct div children of the form.)
+
+interview questions on axes:
+1. When would you use following-sibling:: instead of contains()?
+Answer:
+When there are multiple similar elements on the page and I want to locate an element relative to another specific element.
+ex. //input[@id='input-firstname']/following-sibling::div
+
+2. What is the difference between parent:: and ancestor::?
+parent::    -> Immediate parent only
+ancestor::  -> Any parent, grandparent, great-grandparent
+ex. - //input[@id='email']/parent::div---> returns only the direct parent.
+    - //input[@id='email']/ancestor::form---> returns the containing form.
+
+3. How would you locate an error message associated with a specific field?
+Answer:
+Use relative XPath:
+//input[@id='input-firstname']/following-sibling::div-----> This creates a relationship between the field and its error message.
+
+4. How would you locate a label corresponding to an input field?
+Answer:
+//input[@id='input-firstname']/parent::div/preceding-sibling::label
+ or
+//label[@for='input-firstname']
+depending on DOM structure.
+
+5. Why are XPath axes useful in automation frameworks?
+   Answer:
+   Reduce dependency on dynamic IDs.
+   Create stable locators.
+   Easier maintenance.
+   Handle complex DOM structures.
+   Improve readability
+6. Suppose an application generates dynamic IDs every run. How would you locate elements?
+   Answer:
+   I would use:
+   Relative XPath
+   XPath axes
+   Text-based locators
+   CSS selectors
+   Parent-child relationships
+   Example:
+   //label[text()='Email']/following-sibling::input
+
+7. Have you used ancestor:: in real projects?
+   Sample Answer:
+   Yes. For example, when a button was inside multiple nested divs and I needed to identify the complete section/container:
+   //button[text()='Save']/ancestor::form
+   This helped validate the entire form before submission.
+
+8. Can XPath axes improve test stability?
+   Answer:
+   Yes. Axes allow us to build locators based on relationships between elements rather than relying on dynamic attributes,
+   making tests more robust and less prone to failures after UI changes.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
