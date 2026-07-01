@@ -32,8 +32,6 @@ public class TC_01 {
         driver.findElement(By.name("agree")).click();
         Thread.sleep(2000);
         driver.findElement(By.xpath("//input[@class='btn btn-primary']")).click();
-//        dr.quit();
-
         Assert.assertTrue(driver.findElement(By.linkText("Logout")).isDisplayed());
         String accountSuccessMessage="Your Account Has Been Created!";
         Assert.assertEquals(driver.findElement(By.xpath("//div[@id='common-success']//h1")).getText(),accountSuccessMessage);
@@ -53,14 +51,14 @@ public class TC_01 {
         driver.quit();
     }
 
-    public String generateNewEmail() {
+    public static String generateNewEmail() {
         //generate email at run time
         Date date = new Date();
         System.out.println(date);
         String dateString = date.toString();
         String DateWithoutSpaces = dateString.replaceAll(" ", "").replaceAll(":", "");
-        String EmailAddress = DateWithoutSpaces + "@gmail.com";
-        System.out.println(EmailAddress);
+        String EmailAddress = "Shubhangi"+DateWithoutSpaces + "@gmail.com";
+        System.out.println("Email address generated at run time is: " + EmailAddress);
         return EmailAddress;
 
     }

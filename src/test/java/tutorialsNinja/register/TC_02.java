@@ -25,27 +25,16 @@ public class TC_02 {
      * The same test case we can automate for another application i.e. Amazon.in where if the password the forgotten then the reset password email  should be sent after
      * entering a valid registered email address
      */
-@Test
+    @Test
     public void verifyEmailConfirmation() {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         driver.get("https://www.amazon.in/");
-        List<WebElement> continueButtons =
-                driver.findElements(By.xpath("//button[@type='submit']"));
-
-        if (!continueButtons.isEmpty()
-                && continueButtons.get(0).isDisplayed()
-                && continueButtons.get(0).isEnabled()) {
-
-            System.out.println("Continue button is displayed and enabled");
-            continueButtons.get(0).click();
-
-        } else {
-
-            System.out.println("Continue button is not displayed");
-        }
+        WebElement continueButton =  driver.findElement(By.xpath("//button[@type='submit']"));
+        Assert.assertTrue(continueButton.isDisplayed() && continueButton.isEnabled(), "Continue button should be visible");
+        continueButton.click();
 
         System.out.println("Further execution continues...");
         String eMail = "shubhangikadam.sk25@gmail.com";
@@ -73,9 +62,9 @@ public class TC_02 {
         String port = "993";
         String username = eMail;
         String password = appPassword;
-        String expectedSubject="amazon.in: Password recovery";
+        String expectedSubject = "amazon.in: Password recovery";
         String expectedBodyContent = "Someone is attempting to reset the password of your account.";
-        String expctedEmailfrom= "\"amazon.in\" <account-update@amazon.in>";
+        String expctedEmailfrom = "\"amazon.in\" <account-update@amazon.in>";
         String url = null;
         try {
             // Configure JavaMail properties and establish a secure IMAP session with Gmail
@@ -104,10 +93,10 @@ public class TC_02 {
                     System.out.println("Subject: " + message.getSubject());
                     Assert.assertEquals(message.getSubject(), expectedSubject);
                     System.out.println("expectedEmailFrom: " + message.getFrom()[0]);
-                   Assert.assertEquals(message.getFrom()[0].toString(), expctedEmailfrom);
-                    String actualEmailBody=getTextFromMesssage(message);
+                    Assert.assertEquals(message.getFrom()[0].toString(), expctedEmailfrom);
+                    String actualEmailBody = getTextFromMesssage(message);
                     Assert.assertTrue(actualEmailBody.contains(expectedBodyContent));
- //                  System.out.println("Email Body: " + getTextFromMesssage(message));
+                    //                  System.out.println("Email Body: " + getTextFromMesssage(message));
                     // Read the email body and ex7tract the password recovery URL from the email content
                     url = extractUrl(actualEmailBody);
                     System.out.println("Extracted URL: " + url);
@@ -120,12 +109,11 @@ public class TC_02 {
             // Close mailbox resources after email processing is complete
             inbox.close(false);
             store.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         // Navigate to the extracted URL and verify that the expected password recovery page is displayed
-    driver.navigate().to(url);
+        driver.navigate().to(url);
         Assert.assertTrue(driver.findElement(By.name("customerResponseDenyButton")).isDisplayed() && driver.findElement(By.name("customerResponseDenyButton")).isEnabled());
         driver.quit();
     }
